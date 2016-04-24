@@ -1,0 +1,47 @@
+
+name: Asier Berra
+description: Notes and blog entries about Data Science and related topics
+meta_description: "Notes and blog entries about Data Science and related topics"
+
+aboutPage: true
+
+#markdown: redcarpet
+#highlighter: pygments
+markdown: kramdown
+highlighter: rouge
+
+paginate: 50
+
+baseurl: /
+domain_name: 'https://asrbrr.github.io'
+google_analytics: 'UA-76825758-1'
+disqus: false
+disqus_shortname: 'your-disqus-shortname'
+
+# Details for the RSS feed generator
+#url:            'http://your-blog-url.example.com'
+#author:         'Your Name'
+
+authorTwitter:  'asrbrr'
+
+permalink:       /:title/
+
+defaults:
+    -
+        scope:
+            path: "" # empty string for all files
+            type: pages
+        values:
+            layout: default
+    -
+        scope:
+            path: "" # empty string for all files
+            type: posts
+        values:
+            layout: post
+    -
+        scope:
+            path: ""
+            type: drafts
+        values:
+            layout: post

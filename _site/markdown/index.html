@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Asier Berra - Markdown syntax quick reference guide</title>
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/assets/css/highlight.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+<body>
+
+  <nav class="main-nav">
+    
+        <a href="/"> <span class="arrow">←</span> Blog </a>
+    
+
+    <a href="/tools">Tools</a>
+
+    
+        <a href="/about">About </a>
+    
+
+    
+
+
+</nav>
+
+  
+
+  <section id="wrapper" class="">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<article class="post">
+    <header>
+        <h1>Markdown syntax quick reference guide</h1>
+        <h2 class="headline">March 12, 2016</h2>
+        <h3></h3>
+        <hr>
+    </header>
+    <section id="post-body">
+        <p>Very brief reference of main markdown syntax features.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Markdown syntax</th>
+      <th>Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">*italic*</code> / <code class="highlighter-rouge">_italic_</code></td>
+      <td><em>ITALIC</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">**bold**</code> / <code class="highlighter-rouge">__bold__</code></td>
+      <td><strong>BOLD</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">~~striped~~</code></td>
+      <td><del>STRIPED</del></td>
+    </tr>
+    <tr>
+      <td style="text-align: right">LaTeX:   <code class="highlighter-rouge">$$ ... $$</code></td>
+      <td><script type="math/tex">e^{i \pi} = -1</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">[link](http://asrbrr.github.io/)</code></td>
+      <td><a href="http://asrbrr.github.io/">link</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">! [alt_text](http://etc) "popup"</code></td>
+      <td><img src="http://etc" alt="alternative text if image fails" title="popup message" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: right">horizontal lines (three hiphens)</td>
+      <td><code class="highlighter-rouge">---</code> or <code class="highlighter-rouge">***</code> or <code class="highlighter-rouge">___</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">#Header1</code> <code class="highlighter-rouge">##Header2</code>  etc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">*List </code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code class="highlighter-rouge">1.  numbered list</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<p><strong>Monospace blocks</strong>: surrounded by ```</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    this is a code block.
+</code></pre>
+</div>
+
+<p><strong>Quotation blocks</strong>: starts with &gt;</p>
+
+<blockquote>
+  <p>quotation  block</p>
+</blockquote>
+
+<p>Tables:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>| TABLE | OK?|
+|:------|:---|
+| row1  | ok |
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="references">References</h2>
+<ul>
+  <li>https://help.github.com/articles/markdown-basics/</li>
+  <li>https://stackedit.io for a nice browser based markdown editor.</li>
+</ul>
+
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="http://twitter.com/asrbrr">
+        <img class="avatar" src="/assets/images/avatar.png">
+        <div>
+            <span class="dark"></span>
+            <span>Notes and blog entries around Data Science and related topics</span>
+        </div>
+    </a>
+
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https://asrbrr.github.io/markdown/ - Markdown syntax quick reference guide by @asrbrr"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+    </section>
+
+  
+</footer>
+
+<!-- Disqus comments 
+
+-->
+
+<!-- Archive post list 
+
+-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
+
+
+

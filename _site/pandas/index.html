@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Asier Berra - Data manipulation with Pandas (python)</title>
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/assets/css/highlight.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+<body>
+
+  <nav class="main-nav">
+    
+        <a href="/"> <span class="arrow">←</span> Blog </a>
+    
+
+    <a href="/tools">Tools</a>
+
+    
+        <a href="/about">About </a>
+    
+
+    
+
+
+</nav>
+
+  
+
+  <section id="wrapper" class="">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<article class="post">
+    <header>
+        <h1>Data manipulation with Pandas (python)</h1>
+        <h2 class="headline">April 23, 2016</h2>
+        <h3></h3>
+        <hr>
+    </header>
+    <section id="post-body">
+        <p>This is a summary for reference of the great Pandas libary, which offers efficient manipulation of spreadsheet-like data in python.</p>
+
+<h2 id="data-structures">Data Structures</h2>
+
+<h4 id="series">Series</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/dsintro.html#series">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>                  <span class="c">#from list</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">])</span>  <span class="c">#from array</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s">'a'</span> <span class="p">:</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">'b'</span> <span class="p">:</span> <span class="mf">1.</span><span class="p">,</span> <span class="s">'c'</span> <span class="p">:</span> <span class="mf">2.</span><span class="p">})</span>      <span class="c">#from dict</span>
+</code></pre>
+</div>
+
+<h4 id="dataframe">Dataframe</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>                   <span class="c">#from ndarray</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'A'</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span><span class="s">'B'</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">'20130102'</span><span class="p">)})</span> <span class="c">#from dict</span>
+</code></pre>
+</div>
+<p>Other ways to construct and other constructors (from_dict, from_records, from_items) exist.</p>
+
+<h4 id="panel">Panel</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/dsintro.html#panel">ref</a>. Container for 3-dimensional data. Axis names:
+ - items: axis 0, each item corresponds to a DataFrame contained inside.
+ - major_axis: axis 1, it is the index (rows) of each of the DataFrames
+ - minor_axis: axis 2, it is the columns of each of the DataFrames</p>
+
+<h2 id="summarizing-and-basic-values">Summarizing and basic values</h2>
+
+<p>Summary:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">to_string</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>      <span class="c">#tabular form</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>      <span class="c">#itself returns a df</span>
+<span class="n">s</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">percentiles</span><span class="o">=</span><span class="p">[</span><span class="o">.</span><span class="mo">05</span><span class="p">,</span> <span class="o">.</span><span class="mi">25</span><span class="p">,</span> <span class="o">.</span><span class="mi">75</span><span class="p">,</span> <span class="o">.</span><span class="mi">95</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s">'all'</span><span class="p">)</span>    <span class="c">#for mixed type df-s</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> 
+<span class="n">pd</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> 
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>          <span class="c">#</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>          <span class="c">#</span>
+</code></pre>
+</div>
+
+<p>Values:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">index</span>           <span class="c">#row index, axis=0</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>         <span class="c">#col index, axis=1</span>
+<span class="n">df</span><span class="o">.</span><span class="n">values</span>          <span class="c">#returns a numpy array</span>
+</code></pre>
+</div>
+
+<h2 id="indexes">Indexes</h2>
+
+<p>Creating:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="s">'e'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="s">'e'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">'something'</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">([</span><span class="s">'2013-01-01'</span><span class="p">,</span> <span class="s">'2013-01-02'</span><span class="p">,</span> <span class="s">'2013-01-03'</span><span class="p">,</span> <span class="s">'2013-01-04'</span><span class="p">],</span>
+              <span class="n">dtype</span><span class="o">=</span><span class="s">'datetime64[ns]'</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">'D'</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="multiindex">Multiindex</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/advanced.html#hierarchical-indexing-multiindex">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_product</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([(</span><span class="s">'bar'</span><span class="p">,</span><span class="s">'one'</span><span class="p">),</span> <span class="p">(</span><span class="s">'bar'</span><span class="p">,</span><span class="s">'two'</span><span class="p">)],</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">'first'</span><span class="p">,</span> <span class="s">'second'</span><span class="p">])</span>
+<span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s">'second'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Setting</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>      <span class="c">#set and add-hoc index</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'colB'</span><span class="p">)</span>    <span class="c">#make a given column (or several) an index</span>
+<span class="n">reset_index</span>             <span class="c">#sets an integer index , previouly called delevel (deprecated)</span>
+</code></pre>
+</div>
+
+<p>Uniqueness:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_unique</span>
+</code></pre>
+</div>
+
+<p>Index values of the Min/Max elements (note idxmin and idxmax are called argmin and argmax in NumPy)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s1</span><span class="o">.</span><span class="n">idxmin</span><span class="p">(),</span> <span class="n">s1</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">idxmin</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="set-operations">Set operations</h4>
+<p><em><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html#set-operations-on-index-objects">ref</a></em>   (note that <code class="highlighter-rouge">+</code> and <code class="highlighter-rouge">-</code>operators were deprecated for set operations on indexes).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">|</span> <span class="n">b</span>            <span class="c">#a.union(b)</span>
+<span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>            <span class="c">#a.intersection(b)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  
+<span class="n">idx1</span> <span class="o">^</span> <span class="n">idx2</span>      <span class="c">#idx1.sym_diff(idx2)</span>
+</code></pre>
+</div>
+
+<h4 id="reindex">Reindex</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#reindexing-and-altering-labels">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="n">reindex</span><span class="p">([</span><span class="s">'e'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">])</span>     <span class="c">#if f was missing, it's added with NaN values</span>
+<span class="n">df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'c'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'three'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">,</span> <span class="s">'one'</span><span class="p">])</span>
+<span class="n">ts2</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>   <span class="c">#Filling while reindexing]</span>
+
+<span class="n">reindex_like</span>
+<span class="n">align</span>
+</code></pre>
+</div>
+
+<h4 id="metadata">Metadata:</h4>
+<ul>
+  <li>Indexes are “mostly immutable”, but it is possible to set and change their metadata. You can use the <code class="highlighter-rouge">rename</code>, <code class="highlighter-rouge">set_names</code>, <code class="highlighter-rouge">set_levels</code>, and <code class="highlighter-rouge">set_labels</code> to set these attributes directly.</li>
+</ul>
+
+<h4 id="types">Types</h4>
+<p>The main types stored in pandas objects are float, int, bool, datetime64[ns], timedelta[ns] and object.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+<span class="n">get_dtype_counts</span><span class="p">()</span>                 <span class="c">#return the number of columns of each type</span>
+<span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="nb">bool</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'number'</span><span class="p">,</span> <span class="s">'bool'</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#object-conversion">Conversion</a>
+Try to force conversion of types from the object dtype to other types</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">convert_objects</span><span class="p">(</span><span class="n">convert_numeric</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'D'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float16'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'B'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<p>To force conversion to datetime64[ns], pass convert_dates=’coerce’. This will convert any datetime-like object to dates, forcing other values to NaT.</p>
+
+<h4 id="datetiem-timedelta">Datetiem, timedelta</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">'20130101 09:10:12'</span><span class="p">,</span><span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s">'20130101'</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">freq</span><span class="o">=</span><span class="s">'D'</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">timedelta_range</span><span class="p">(</span><span class="s">'1 day 00:00:05'</span><span class="p">,</span><span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">freq</span><span class="o">=</span><span class="s">'s'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="selecting">Selecting</h2>
+
+<h4 id="and--operators"><code class="highlighter-rouge">[ ]</code> and <code class="highlighter-rouge">.</code> operators</h4>
+<p>They provide intuitive dict-like or numpy-like syntax, but have optimization limits. For production code, it is recommended to take advantage of the optimized pandas data access methods below.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>                      <span class="c">#dict-like</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'A'</span><span class="p">]</span>                     <span class="c">#select a column; returns Series</span>
+<span class="n">df</span><span class="o">.</span><span class="n">A</span>                        <span class="c">#like df['A'], as long as colname is a valid identifier  </span>
+<span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>                     <span class="c">#row position selection</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'20130102'</span><span class="p">:</span><span class="s">'20130104'</span><span class="p">]</span>   <span class="c">#row index selection</span>
+<span class="n">df</span><span class="p">[:,</span><span class="s">'A'</span><span class="p">]</span>                   <span class="c">#col index selection</span>
+</code></pre>
+</div>
+
+<h4 id="boolena-indexing">Boolena indexing</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing">ref</a>. Operators: <strong><code class="highlighter-rouge">|</code></strong> (for <code class="highlighter-rouge">or</code>), <strong><code class="highlighter-rouge">&amp;</code></strong> (for <code class="highlighter-rouge">and</code>), and <strong><code class="highlighter-rouge">~</code></strong> (for <code class="highlighter-rouge">not</code>)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">s</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'A'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])]</span>
+<span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span> 
+</code></pre>
+</div>
+
+<h4 id="by-either-label-or-position--ix-operator">By either label or position ; <code class="highlighter-rouge">.ix</code> operator</h4>
+<p>Note that when an axis is integer based, ONLY label based access and not positional access is supported. Thus, in such cases, it’s usually better to be explicit and use .iloc or .loc. <br />
+For all .ix, .loc and .iloc, axes left out of the specification are assumed to be <code class="highlighter-rouge">:</code> ( p.loc[‘a’] is equiv to p.loc[‘a’, :, :]).<br />
+[deprecated: irow, icol, iget_value]</p>
+
+<h4 id="by-label-loc">By label (<code class="highlighter-rouge">.loc</code>)</h4>
+<p>Note that both the start and end bound are <em>included</em>!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>                 <span class="c">#cross section, equiv to `df.xs('a')`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="s">'c'</span><span class="p">]</span>                <span class="c">#index labels up to 'c' (included!)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>                   <span class="c">#index label=5 , not the 5th element.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'b'</span><span class="p">,</span><span class="s">'d'</span><span class="p">],:]</span>  
+</code></pre>
+</div>
+
+<h4 id="by-position-iloc">By position (<code class="highlighter-rouge">.iloc</code>)</h4>
+<p>Note that the upper bond is <em>excluded</em> !</p>
+
+<p>Note that out of range slice indexes are handled gracefully (ie, return empty object instead of error). However a single indexer out of bounds will raise an IndexError.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>                  <span class="c">#cross-section (second row), equiv to `df.xs(1)`</span>
+<span class="n">s</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>                  <span class="c">#first and second elements</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+</code></pre>
+</div>
+
+<h4 id="scalar-value-access-at-iat">Scalar value access (<code class="highlighter-rouge">at()</code>, iat()`)</h4>
+
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html#fast-scalar-value-getting-and-setting">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'A'</span><span class="p">]</span>          <span class="c">#label based</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>               <span class="c">#position based</span>
+<span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s">'Z'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>  <span class="c">#appends 'Z', sets the given element, and the rest of cells in row and col are Nan</span>
+</code></pre>
+</div>
+
+<h4 id="where-and-mask-methods"><code class="highlighter-rouge">where()</code> and <code class="highlighter-rouge">mask()</code> methods</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html#the-where-method-and-masking">ref</a>.
+By default, <code class="highlighter-rouge">where()</code> returns a copy (there is a ‘inplace’ argument).
+It Returns an output the same shape as the original data. For df-s, equivalent to <code class="highlighter-rouge">df[df &lt; 0]</code></p>
+
+<p><code class="highlighter-rouge">mask()</code> is the inverse boolean operation of <code class="highlighter-rouge">where()</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>         <span class="c">#Includes NaNs. Compare with s[s &gt; 0], that would skip NaN-s</span>
+<span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">df</span><span class="p">)</span>  <span class="c">#Replaces False cases by the given 'other' argument</span>
+<span class="n">df</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">df</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>       <span class="c">#returns Nan where the condition is met</span>
+</code></pre>
+</div>
+
+<h4 id="get-method"><code class="highlighter-rouge">get()</code> method</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html#dictionary-like-get-method">ref</a>
+Using the get method, a missing label will return None if the label does not exist, or the specified default:<br />
+<code class="highlighter-rouge">python
+s.get('x', default=-1)
+</code></p>
+
+<h4 id="select--lookup-methods">select() &amp; lookup() methods</h4>
+<p>The <code class="highlighter-rouge">select</code> method should be used only when there is no more direct way. select takes a function which operates on labels along axis and returns a boolean.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="s">'A'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>The lookup method is a label-based “fancy indexing” function for DataFrame. Given equal-length arrays of row and column labels, return an array of the values corresponding to each (row, col) pair.</p>
+
+<h4 id="datetime-like-properties-of-series-dt">Datetime-like properties of series: <code class="highlighter-rouge">dt</code></h4>
+
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#dt-accessor">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<h4 id="assign-dplyrs-mutate">assign() (dplyr’s <code class="highlighter-rouge">mutate</code>)</h4>
+
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/dsintro.html#assigning-new-columns-in-method-chains">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">iris</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sepal_ratio</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[</span><span class="s">'SepalWidth'</span><span class="p">]</span> <span class="o">/</span> <span class="n">iris</span><span class="p">[</span><span class="s">'SepalLength'</span><span class="p">])</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sepal_ratio</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'SepalWidth'</span><span class="p">]</span> <span class="o">/</span>
+   <span class="o">....</span><span class="p">:</span>                                      <span class="n">x</span><span class="p">[</span><span class="s">'SepalLength'</span><span class="p">]))</span>
+</code></pre>
+</div>
+
+<h4 id="query-experimental"><code class="highlighter-rouge">query()</code> (experimental)</h4>
+
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html#the-query-method-experimental">ref</a>
+Selection using an expression. A use case for query() is when you have a collection of DataFrame objects that have a subset of column names (or index levels/names) in common</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">'(a &lt; b) &amp; (b &lt; c)'</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">'a &lt; b &lt; c'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="sepcial-types-of-selections">Sepcial types of selections</h2>
+
+<h4 id="missing-data">Missing data</h4>
+<p><code class="highlighter-rouge">np.NaN</code>, <code class="highlighter-rouge">NaT</code>, and <code class="highlighter-rouge">None</code> are considered missing by the isnull function.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span>           <span class="c">#boolean array</span>
+<span class="n">df</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span>        <span class="c">#boolean array</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>           <span class="c">#return df without na values</span>
+</code></pre>
+</div>
+
+<h4 id="dealing-with-duplicate-data">Dealing with duplicate data</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">([</span><span class="s">'colA'</span><span class="p">,</span> <span class="s">'colB'</span><span class="p">])</span>    <span class="c">#boolean vector</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop_duplicated</span>
+<span class="n">s</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h4 id="random-sample">Random sample</h4>
+<p>Note that weigths can be assigned (with array list, ts or df column). random_state sets the seed.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>                    <span class="c">#one sampled row from series</span>
+<span class="n">s</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>   <span class="c">#6 sampels rows with replacement</span>
+</code></pre>
+</div>
+
+<h4 id="discretization-and-quantiling">Discretization and quantiling</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>       <span class="c">#bins based</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>      <span class="c">#quantile based</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<h2 id="modifying">Modifying</h2>
+
+<p>Setting:<br />
+The <code class="highlighter-rouge">.loc</code>/<code class="highlighter-rouge">.ix</code>/<code class="highlighter-rouge">[]</code> operations can perform enlargement when setting a non-existant key for that axis.<br />
+Setting in general works by assignment after selection of an item or slice.</p>
+
+<p>Rename</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'data'</span><span class="p">:</span><span class="s">'Data'</span><span class="p">,</span> <span class="s">'quality'</span><span class="p">:</span><span class="s">'Quality'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Delete</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s">'two'</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>      <span class="c">#remove col</span>
+<span class="n">df</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'three'</span><span class="p">)</span>
+
+</code></pre>
+</div>
+
+<p>Sort</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>   
+<span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s">'B'</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">order</span><span class="p">()</span>
+<span class="n">s</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">()</span>
+<span class="n">s</span><span class="o">.</span><span class="n">nlargest</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="arithmetics-logical-operations-descriptive-statistics">Arithmetics, logical operations, descriptive statistics</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>       <span class="c">#matrix multiplication</span>
+<span class="n">s1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>         <span class="c">#dot product of vectors</span>
+<span class="n">df</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>           <span class="c">#transpose</span>
+
+<span class="p">(</span><span class="n">df</span><span class="o">+</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">df</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>   <span class="c">#equals treats NaN-s as equals, as opposed to ==</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">count</span>                <span class="c">#Number of non-null observations</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">sum</span>                  <span class="c">#Sum of values</span>
+<span class="n">df</span><span class="o">.</span><span class="n">mean</span>                 <span class="c">#Mean of values</span>
+<span class="n">df</span><span class="o">.</span><span class="n">mad</span>                  <span class="c">#Mean absolute deviation</span>
+<span class="n">df</span><span class="o">.</span><span class="n">median</span>               <span class="c">#Arithmetic median of values</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">min</span>                  <span class="c">#Minimum</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">max</span>                  <span class="c">#Maximum</span>
+<span class="n">df</span><span class="o">.</span><span class="n">mode</span>                 <span class="c">#Mode</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">abs</span>                  <span class="c">#Absolute Value</span>
+<span class="n">df</span><span class="o">.</span><span class="n">prod</span>                 <span class="c">#Product of values</span>
+<span class="n">df</span><span class="o">.</span><span class="n">std</span>                  <span class="c">#Unbiased standard deviation</span>
+<span class="n">df</span><span class="o">.</span><span class="n">var</span>                  <span class="c">#Unbiased variance</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sem</span>                  <span class="c">#Unbiased standard error of the mean</span>
+<span class="n">df</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">skew</span>              <span class="c">#Unbiased skewness (3rd moment)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">kurt</span>                 <span class="c">#Unbiased kurtosis (4th moment)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">quantile</span>             <span class="c">#Sample quantile (value at %)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">cumsum</span>               <span class="c">#Cumulative sum</span>
+<span class="n">df</span><span class="o">.</span><span class="n">cumprod</span>              <span class="c">#Cumulative product</span>
+<span class="n">df</span><span class="o">.</span><span class="n">cummax</span>               <span class="c">#Cumulative maximum</span>
+<span class="n">df</span><span class="o">.</span><span class="n">cummin</span>               <span class="c">#Cumulative minimum</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>             <span class="c">#number of unique non-null values in a Series</span>
+<span class="n">s</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>        <span class="c">#computes a histogram of a 1D array of values</span>
+</code></pre>
+</div>
+
+<p>Covariance and Correlation
+<a href="http://pandas.pydata.org/pandas-docs/stable/computation.html#covariance">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>               <span class="c">#covariance bwteen series</span>
+<span class="n">df</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>                <span class="c">#covariance matrix</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'b'</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s">'spearman'</span><span class="p">)</span>    <span class="c">#correlation</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>              <span class="c">#Rank columns</span>
+</code></pre>
+</div>
+
+<p>Moving (rolling) statistics
+<a href="http://pandas.pydata.org/pandas-docs/stable/computation.html#moving-rolling-statistics-moments">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">rolling_count</span>       <span class="c">#Number of non-null observations</span>
+<span class="n">rolling_sum</span>         <span class="c">#Sum of values</span>
+<span class="n">rolling_mean</span>        <span class="c">#Mean of values</span>
+<span class="n">etc</span>
+<span class="n">rolling_window</span>      <span class="c">#Moving window function</span>
+
+<span class="n">ewma</span>                <span class="c">#Exponentially weighted (EW) moving average</span>
+<span class="n">ewmstd</span>              <span class="c">#EW moving standard deviation</span>
+<span class="n">etc</span>
+</code></pre>
+</div>
+
+<h2 id="group-by-split-apply-combine">Group by (split-apply-combine)</h2>
+
+<h4 id="group-by">Group by</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/groupby.html#splitting-an-object-into-groups">ref</a></p>
+
+<p>Grouping</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">grouped</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s">'bar'</span><span class="p">)</span>
+<span class="n">grouped</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">groups</code> attribute is a dict whose keys are the computed unique groups and corresponding values being the axis labels belonging to each group</p>
+
+<p>Iteration can be done with <code class="highlighter-rouge">for name, group in grouped: ...</code></p>
+
+<p>Aggregation</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">grouped</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">'C'</span><span class="p">)</span>      <span class="c">#“dispatches” method calls to the groups</span>
+<span class="n">grouped</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">)</span>
+<span class="n">grouped</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Transform<br />
+this retunrs an object that is indexed the same (same size) as the one being grouped</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">t</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'year'</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">t</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'year'</span><span class="p">)</span>   <span class="c">#this should have mean 0 and std=1</span>
+</code></pre>
+</div>
+
+<p>Filter  returns a subset of the original object</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">sf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">dff</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'B'</span><span class="p">)</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="function-application--itereation">Function application &amp; itereation</h2>
+
+<h4 id="tablewise-function-application-pipe">Tablewise Function Application: <code class="highlighter-rouge">pipe()</code></h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#tablewise-function-application">ref</a>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">arg1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c">#equivalent to f(g(h(df), arg1=1), arg2=2, arg3=3)</span>
+</code></pre>
+</div>
+
+<h4 id="row-or-column-wise-function-application-apply">Row or Column-wise Function Application: <code class="highlighter-rouge">apply()</code></h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#row-or-column-wise-function-application">ref</a>:</p>
+
+<p>Apply arbitrary functions along the axes of a df or panel:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>                     <span class="c">#'vertical'</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>             <span class="c">#'horizontal'</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="nb">min</span><span class="p">())</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="o">.</span><span class="n">interpolate</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="elementwise-function-application-applymap-and-map">Elementwise function application: <code class="highlighter-rouge">applymap()</code> and <code class="highlighter-rouge">map()</code></h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#applying-elementwise-python-functions">ref</a>:</p>
+
+<p>The function <code class="highlighter-rouge">applymap()</code> on DataFrame and analogously <code class="highlighter-rouge">map()</code> on Series accept any Python function taking a single value and returning a single value</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="p">)</span>
+
+</code></pre>
+</div>
+
+<h4 id="iteration">Iteration</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#iteration">ref</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span> <span class="o">...</span>
+<span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span> <span class="o">...</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">itertuples</span><span class="p">()</span>                   <span class="c">#iterator yielding a tuple with all elements in each row</span>
+</code></pre>
+</div>
+
+<h4 id="vectorized-string-methods">Vectorized string methods</h4>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html#vectorized-string-methods">ref</a>
+Series is equipped with a set of string processing methods. Applies to columns as well.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">' '</span><span class="p">,</span><span class="s">'_'</span><span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'_'</span><span class="p">)</span>                     <span class="c">#returns tuples</span>
+<span class="n">s</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'_'</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>        <span class="c">#returns df</span>
+<span class="n">s</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">extract</span>                        <span class="c">#uses regexps</span>
+<span class="n">s</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span>                        <span class="c">#uses regexps</span>
+<span class="n">s</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">findall</span>                        <span class="c">#uses regexps</span>
+</code></pre>
+</div>
+<p>and many other methods <a href="http://pandas.pydata.org/pandas-docs/stable/text.html#method-summary">ref</a></p>
+
+<h2 id="combining-datasets">Combining datasets</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df1</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>   <span class="c">#combine two DataFrame objects where missing values in one DataFrame are conditionally filled with like-labeled values from the other DataFrame</span>
+
+</code></pre>
+</div>
+
+<h2 id="io">I/O</h2>
+<p>df = pd.read_csv(‘.\data\ex_data1.csv’, parse_dates=True, index_col=0)
+etc</p>
+
+<h2 id="code-snipptes">Code snipptes</h2>
+<p>…</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li>Most of the basic contents are directly taken form the official pandas documentation: <a href="http://pandas.pydata.org/pandas-docs/stable/index.html">http://pandas.pydata.org/pandas-docs/stable/index.html</a></li>
+  <li><a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data Analysis</a></li>
+</ul>
+
+<hr />
+
+<blockquote>
+  <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote>
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="http://twitter.com/asrbrr">
+        <img class="avatar" src="/assets/images/avatar.png">
+        <div>
+            <span class="dark"></span>
+            <span>Notes and blog entries around Data Science and related topics</span>
+        </div>
+    </a>
+
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https://asrbrr.github.io/pandas/ - Data manipulation with Pandas (python) by @asrbrr"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+    </section>
+
+  
+</footer>
+
+<!-- Disqus comments 
+
+-->
+
+<!-- Archive post list 
+
+-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
+
+
+

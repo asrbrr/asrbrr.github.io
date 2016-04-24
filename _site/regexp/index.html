@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Asier Berra - Regular expressions (python) for string manipulation </title>
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/assets/css/highlight.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+<body>
+
+  <nav class="main-nav">
+    
+        <a href="/"> <span class="arrow">←</span> Blog </a>
+    
+
+    <a href="/tools">Tools</a>
+
+    
+        <a href="/about">About </a>
+    
+
+    
+
+
+</nav>
+
+  
+
+  <section id="wrapper" class="">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<article class="post">
+    <header>
+        <h1>Regular expressions (python) for string manipulation </h1>
+        <h2 class="headline">March 27, 2016</h2>
+        <h3></h3>
+        <hr>
+    </header>
+    <section id="post-body">
+        <p>References on the use of Regular Expressions (RegExp) in python.</p>
+
+<h2 id="search">Search</h2>
+
+<p>These functions return a <code class="highlighter-rouge">matchobject</code>, or <code class="highlighter-rouge">None</code> if not sucessful</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattner</span><span class="p">,</span> <span class="n">string</span><span class="p">[,</span> <span class="n">flags</span><span class="p">])</span>   <span class="c">#searches *anywhere* in the string.  </span>
+<span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">[,</span> <span class="n">flags</span><span class="p">])</span>    <span class="c">#searches at the *beginning* of the string.  </span>
+<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">[,</span> <span class="n">flags</span><span class="p">])</span>  <span class="c">#returns all matches as a list of strings  </span>
+<span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">[,</span> <span class="n">maxsplit</span><span class="p">,</span> <span class="n">flags</span><span class="p">])</span> <span class="c">#returns list of strings </span>
+</code></pre>
+</div>
+
+<p>To view the results:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>     <span class="c">#returns is the matching text.</span>
+                        <span class="c">#group(0) is the entire match;</span>
+                        <span class="c">#.group(1) si the first parenthesized subgroup. </span>
+                        <span class="c">#Multiple arguments such as .group(1, 2) give us a tuple.  </span>
+</code></pre>
+</div>
+
+<h2 id="manipulation">Manipulation</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">string</span><span class="p">[,</span> <span class="n">count</span><span class="p">,</span> <span class="n">flags</span><span class="p">])</span>     <span class="c"># replace instances by repl.  </span>
+<span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>                                        <span class="c">#split string by the occurrences of pattern. If capturing parentheses are used in pattern, then the text of all groups in the pattern are also returned as part of the resulting list.  </span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span> <span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>  <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c">#return the string obtained by replacing the leftmost non-overlapping occurrences of pattern in string. `count` is the maximum number of pattern occurrences to be replaced.  </span>
+</code></pre>
+</div>
+
+<h2 id="various">Various</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">[,</span> <span class="n">flags</span><span class="p">])</span>  <span class="c"># compiles a RegExp pattern into a RegexObject , which can be used for matching using its **match()** and **search()** methods.    </span>
+<span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">,</span>  <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span>          <span class="c">#  Ignore capital characters.  </span>
+</code></pre>
+</div>
+
+<p>The ‘r’ at the start of the pattern string designates a python “raw” string which passes through backslashes without change which is very handy for regular expressions.</p>
+
+<h2 id="patterns">Patterns</h2>
+
+<p>Except for control characters, <code class="highlighter-rouge">(+ ? . * ^ $ ( ) [ ] { } | \)</code>, all characters match themselves.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">pattern</th>
+      <th style="text-align: left">descr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">^</code></td>
+      <td style="text-align: left">Matches beginning of line.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">$</code></td>
+      <td style="text-align: left">Matches end of line.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">.</td>
+      <td style="text-align: left">Matches any single character except newline. Using m option allows it to match newline as well.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">[…]</td>
+      <td style="text-align: left">Matches any single character in brackets.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">[^…]</td>
+      <td style="text-align: left">Matches any single character not in brackets</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">re*</code></td>
+      <td style="text-align: left">Matches 0 or more occurrences of preceding expression.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">re+</td>
+      <td style="text-align: left">Matches 1 or more occurrence of preceding expression.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">re?</td>
+      <td style="text-align: left">Matches 0 or 1 occurrence of preceding expression.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">re{ n}</td>
+      <td style="text-align: left">Matches exactly n number of occurrences of preceding expression.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">re{ n,}</td>
+      <td style="text-align: left">Matches n or more occurrences of preceding expression.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">re{ n, m}</td>
+      <td style="text-align: left">Matches at least n and at most m occurrences of preceding expression.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ab</td>
+      <td style="text-align: left">Matches either a or b.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">(re)</td>
+      <td style="text-align: left">Groups regular expressions and remembers matched text.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">a|b</code></td>
+      <td style="text-align: left">Matches either a or b.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">.</code></td>
+      <td style="text-align: left">matches any single character except newline ‘\n’.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">\s</code></td>
+      <td style="text-align: left">matches whitespace [ \t\n\r\f\v]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">\S</code></td>
+      <td style="text-align: left">opposeite to <code class="highlighter-rouge">\s</code> (matches non-whitespace)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">\d</code></td>
+      <td style="text-align: left">matches digits. Equivalent to [0-9]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">\D</code></td>
+      <td style="text-align: left">opposite to <code class="highlighter-rouge">\d</code> (matches nondigits).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">\w</code></td>
+      <td style="text-align: left">matches alphanimeric characters [0-9a-zA-Z_]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">\W</code></td>
+      <td style="text-align: left">opposite to <code class="highlighter-rouge">\w</code> (non-alphanumeric)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>intro: <a href="https://developers.google.com/edu/python/regular-expressions">https://developers.google.com/edu/python/regular-expressions</a></li>
+  <li>cheatsheet: <a href="https://github.com/tartley/python-regex-cheatsheet/blob/master/cheatsheet.rst">https://github.com/tartley/python-regex-cheatsheet/blob/master/cheatsheet.rst</a></li>
+  <li>comprehensive: <a href="http://www.tutorialspoint.com/python/python_reg_expressions.htm">http://www.tutorialspoint.com/python/python_reg_expressions.htm</a></li>
+  <li>interactive: <a href="http://pythex.org/">http://pythex.org/</a></li>
+</ol>
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="http://twitter.com/asrbrr">
+        <img class="avatar" src="/assets/images/avatar.png">
+        <div>
+            <span class="dark"></span>
+            <span>Notes and blog entries around Data Science and related topics</span>
+        </div>
+    </a>
+
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https://asrbrr.github.io/regexp/ - Regular expressions (python) for string manipulation  by @asrbrr"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+    </section>
+
+  
+</footer>
+
+<!-- Disqus comments 
+
+-->
+
+<!-- Archive post list 
+
+-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Asier Berra</title>
+    <description>Notes and blog entries around Data Science and related topics</description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Data manipulation with Pandas (python)</title>
+        
+        
+          <description>&lt;p&gt;This is a summary for reference of the great Pandas libary, which offers efficient manipulation of spreadsheet-like data in python.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 23 Apr 2016 00:00:00 +0200</pubDate>
+        <link>/pandas/</link>
+        <guid isPermaLink="true">/pandas/</guid>
+      </item>
+    
+      <item>
+        <title>R language basics</title>
+        
+        
+          <description>&lt;p&gt;Simple notes for programming with the R language.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 16 Apr 2016 00:00:00 +0200</pubDate>
+        <link>/R/</link>
+        <guid isPermaLink="true">/R/</guid>
+      </item>
+    
+      <item>
+        <title>Regular expressions (python) for string manipulation </title>
+        
+        
+          <description>&lt;p&gt;References on the use of Regular Expressions (RegExp) in python.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sun, 27 Mar 2016 00:00:00 +0100</pubDate>
+        <link>/regexp/</link>
+        <guid isPermaLink="true">/regexp/</guid>
+      </item>
+    
+      <item>
+        <title>Git cheat sheet</title>
+        
+        
+          <description>&lt;h2 id=&quot;general&quot;&gt;General&lt;/h2&gt;
+
+</description>
+        
+        <pubDate>Sat, 26 Mar 2016 00:00:00 +0100</pubDate>
+        <link>/git/</link>
+        <guid isPermaLink="true">/git/</guid>
+      </item>
+    
+      <item>
+        <title>Markdown syntax quick reference guide</title>
+        
+        
+          <description>&lt;p&gt;Very brief reference of main markdown syntax features.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 12 Mar 2016 00:00:00 +0100</pubDate>
+        <link>/markdown/</link>
+        <guid isPermaLink="true">/markdown/</guid>
+      </item>
+    
+      <item>
+        <title>Data Science MOOC-s and video series</title>
+        
+        
+          <description>&lt;p&gt;A list of  courses around data science that I found interesting or want to keep track of.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 05 Mar 2016 00:00:00 +0100</pubDate>
+        <link>/moocs/</link>
+        <guid isPermaLink="true">/moocs/</guid>
+      </item>
+    
+      <item>
+        <title>Data Science books and podcasts</title>
+        
+        
+          <description>&lt;p&gt;Here are some books and podcasts that that I liked, or that I found as good references .&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 01 Mar 2016 00:00:00 +0100</pubDate>
+        <link>/books/</link>
+        <guid isPermaLink="true">/books/</guid>
+      </item>
+    
+  </channel>
+</rss>

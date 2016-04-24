@@ -1,0 +1,19 @@
+---
+title: "Excel VBA snippets"
+date: 2016-04-16
+description: ""
+---
+
+VBA macros in Excel are not the best idea to use in general, but ocassionally depending how messy were the files you were given, it might be quicker to just scratch a few lines of VBA and get the job done.
+
+Here are code snippets that I have found useful.
+
+
+##### Loop through files in a directory  
+``` 
+MyFile = Dir(path & "*.xls")    
+Do While MyFile <> ""
+       ...
+        MyFile = Dir()   'this jumps into the next file in the dir
+Loop
+```

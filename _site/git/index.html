@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Asier Berra - Git cheat sheet</title>
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/assets/css/highlight.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+<body>
+
+  <nav class="main-nav">
+    
+        <a href="/"> <span class="arrow">←</span> Blog </a>
+    
+
+    <a href="/tools">Tools</a>
+
+    
+        <a href="/about">About </a>
+    
+
+    
+
+
+</nav>
+
+  
+
+  <section id="wrapper" class="">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<article class="post">
+    <header>
+        <h1>Git cheat sheet</h1>
+        <h2 class="headline">March 26, 2016</h2>
+        <h3></h3>
+        <hr>
+    </header>
+    <section id="post-body">
+        <h2 id="general">General</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git help  or  git  --help
+git help &lt;command&gt;
+git status
+git log
+git log -p &lt;file&gt;         #history for a given file
+exit
+</code></pre>
+</div>
+
+<p>Comments to the commits:<br />
+- the Pandas project uses various three-letter keys to indicate the type of commit, such as (ENH)ancement, BUG, and (DOC)umentation.</p>
+
+<h2 id="local-repos">Local repos</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git init                  #create repo
+
+git add &lt;file&gt;            #stage file
+git add .                 #adds all new files
+git add -u                #updates tracking for deleted or renamed files
+git add -A                # same as previous two ones
+
+git commit -m "message"   #commit to local repo
+git commit -a             #automatically stage tracked files that have been modified or deleted
+
+git diff                  #changes in working directory not yet staged for a commit.
+git diff --cached         #changes that are  staged
+
+git tag &lt;tag&gt;             #mark current commit with a tag
+
+</code></pre>
+</div>
+
+<p>Undoing things</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout &lt;commit&gt; &lt;file&gt; #restore local file to a previous 
+git checkout master       #return to the most advanced point after chckout of a previous
+git checkout HEAD &lt;file&gt;  #restore local files to the last commited state (does not affect new files)commit
+
+git reset HEAD             #make index same as HEAD (discarding staged files)
+git reset HEAD &lt;stagedfile&gt;#make index same as HEAD; remove file from the index
+git reset --hard &lt;commit&gt;  #discard all local changes permamently
+
+git revert &lt;commit&gt;       #remove given commit from history
+
+git rm --cached &lt;file&gt;    #removes the file from index alone and keeps it in your working copy: exact opposite of git add file
+
+</code></pre>
+</div>
+
+<p>Diagram: git data transport commands (by Oliver Steele)
+<img src="http://blog.osteele.com/images/2008/git-transport.png" alt="Git data transport commands (by Oliver Steele)" /></p>
+
+<h2 id="branches">Branches</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git branch                #see branches, and what branch you are in
+git branch -d brnchname   #delete
+
+git checkout branch       #create or move HEAD to the branch
+git checkout master       #switch back to the master
+
+git merge branch          #merge branch into the current branch (typically, master)
+git merge --abort
+
+git rebase &lt;branch&gt;       #rebase current HEAD into branch
+</code></pre>
+</div>
+
+<h2 id="remote-repos">Remote repos</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone ssh://...
+
+git push &lt;branch&gt;         #take local changes to remote repo
+git fetch &lt;remote&gt;        #download changes but don't integrate into HEAD
+git pull &lt;remote&gt;         #download changes and integrate/merge into HEAD
+
+git remote add origin https://github.com/... : links local to remote repo
+git remote -v             #list configured remotes
+git remote show &lt;remote&gt;  #
+</code></pre>
+</div>
+
+<h2 id="git-configuration">Git configuration</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git config --global user.name "name"
+git config --global user.email "email"
+git config --global core.editor "nano"
+git config --list
+
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="github">Github</h2>
+
+<ul>
+  <li>Fork another user’s repo: creates a copy of their repo; can clone into your local desktop</li>
+  <li>Pull request</li>
+</ul>
+
+<hr />
+
+<h2 id="references">References</h2>
+<ul>
+  <li>Diagram by Oliver Steele: http://blog.osteele.com/images/2008/git-transport.png</li>
+  <li>http://www.git-tower.com/blog/git-cheat-sheet/</li>
+  <li>http://git-scm.com/book/en/v2</li>
+</ul>
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="http://twitter.com/asrbrr">
+        <img class="avatar" src="/assets/images/avatar.png">
+        <div>
+            <span class="dark"></span>
+            <span>Notes and blog entries around Data Science and related topics</span>
+        </div>
+    </a>
+
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https://asrbrr.github.io/git/ - Git cheat sheet by @asrbrr"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+    </section>
+
+  
+</footer>
+
+<!-- Disqus comments 
+
+-->
+
+<!-- Archive post list 
+
+-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76825758-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
+
+
+

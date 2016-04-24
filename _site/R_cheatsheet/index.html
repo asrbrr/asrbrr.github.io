@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Asier Berra - R language chatsheet </title>
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/assets/css/highlight.css">
+</head>
+<body>
+
+  <nav class="main-nav">
+    
+        <a href="/"> <span class="arrow">←</span> Home </a>
+    
+
+    
+        <a href="/about">About </a>
+    
+
+    <a href="/references">References</a>
+
+
+</nav>
+
+  
+
+  <section id="wrapper" class="">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<article class="post">
+    <header>
+        <h1>R language chatsheet </h1>
+        <h2 class="headline">April 16, 2016</h2>
+        <h3>cheat-sheet</h3>
+        <hr>
+    </header>
+    <section id="post-body">
+        <h4 id="general-commands">General commands</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;-</span>              <span class="c1">#assignment (also =)
+</span><span class="o">&lt;&lt;-</span>             <span class="c1">#assignment in another environment
+#               #comments
+</span><span class="o">?</span><span class="n">help</span>           <span class="c1">#also   help(func)  ;  ?`:`for operators
+</span><span class="n">example</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+
+<span class="n">arguments</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span>  <span class="c1">#lsit the arguments of the function
+</span><span class="n">identical</span><span class="p">()</span>     <span class="c1">#compare two objects
+</span>  
+<span class="n">save</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">objA</span><span class="p">,</span> <span class="n">objB</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="s2">"filename.Rda"</span><span class="p">)</span>
+<span class="n">load</span><span class="p">(</span><span class="s2">"filename.Rda"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="basic-functions">Basic functions</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">#Object information
+</span><span class="n">class</span><span class="p">()</span>
+<span class="n">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1">#compactly display internal structure of a R object, including functions
+</span>
+<span class="c1">#Shape
+</span><span class="n">length</span><span class="p">()</span>      <span class="c1">#vectors have length, not dim
+</span><span class="n">dim</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>        <span class="c1">#number of rows&amp;columns in matrix or df
+</span>
+<span class="c1">#Names, attributes
+</span><span class="n">names</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>       <span class="c1">#assign names to R objects
+</span><span class="n">attributes</span><span class="p">()</span>                       <span class="c1">#attributes of an object
+</span><span class="n">attr</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="s2">"att_name"</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s2">"m/s"</span>  <span class="c1">#set an attribute
+</span>
+<span class="c1">#Retetition, spliting and joining
+</span><span class="n">rep</span><span class="p">(</span><span class="n">NA</span><span class="p">,</span> <span class="m">100</span><span class="p">)</span>  <span class="c1"># repeat 100 times
+</span><span class="n">unique</span><span class="p">()</span>    <span class="c1">#remove duplicates
+</span><span class="n">split</span>         <span class="c1">#useful in conjunction with lapply or sapply
+</span><span class="n">paste</span><span class="p">()</span>       <span class="c1">#join elements from a vector; if two sequences given, is pariwise
+</span>
+
+
+
+
+
+</code></pre>
+</div>
+
+<h4 id="filesystem-navigation">Filesystem navigation</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">getwd</span><span class="p">()</span>
+<span class="n">setwd</span><span class="p">(</span><span class="n">abspath</span><span class="p">)</span>        <span class="c1">#in Windows ""C:\\etc"
+</span><span class="n">setwd</span><span class="p">(</span><span class="s2">"./data"</span><span class="p">)</span>       <span class="c1">#
+</span><span class="n">setwd</span><span class="p">(</span><span class="s2">"../"</span><span class="p">)</span>          <span class="c1">#move one dir up
+</span>
+<span class="n">list.files</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>      <span class="c1">#also dir()
+</span><span class="n">file.exists</span><span class="p">(</span><span class="s2">"dirName"</span><span class="p">)</span>
+<span class="n">file.create</span><span class="p">()</span>
+<span class="n">file.copy</span><span class="p">()</span>
+<span class="n">file.path</span><span class="p">()</span>
+<span class="n">dir.create</span><span class="p">(</span><span class="s2">"dirName"</span><span class="p">)</span>
+<span class="n">dir.exists</span><span class="p">()</span>
+
+<span class="n">unlink</span><span class="p">()</span>              <span class="c1">#delete directory; note the recursive flag for nested directories
+</span></code></pre>
+</div>
+
+<h4 id="workspace">Workspace</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">ls</span><span class="p">()</span>           <span class="c1">#list of variables in the workspace; rm(list=ls()) to clear
+</span></code></pre>
+</div>
+
+<h4 id="packages">Packages</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s1">'ggplot2'</span><span class="p">)</span>  
+<span class="n">update.packages</span><span class="p">(</span><span class="n">checkBuilt</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">ask</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span>
+<span class="n">libary</span><span class="p">(</span><span class="n">ggplo2</span><span class="p">)</span>    <span class="c1">#load package for use (no quotes!)
+</span><span class="n">R.version.string</span>
+</code></pre>
+</div>
+
+<h4 id="is-functions">Is functions</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          
+<span class="n">is.nan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span><span class="p">[</span><span class="o">!</span><span class="n">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>       <span class="c1">#removes NA values
+</span><span class="n">complete.cases</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>  <span class="c1">#which cases are complete 
+</span></code></pre>
+</div>
+
+<h4 id="coercion">Coercion</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">as.logical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="tools">Tools</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">gl</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>     <span class="c1">#factor vector, n levels and k repetitions each
+</span></code></pre>
+</div>
+
+<hr />
+
+<h2 id="atomic-data-types">Atomic data types</h2>
+<p>Everythin is an object in R.</p>
+
+<h4 id="character">character</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>"string"
+</code></pre>
+</div>
+
+<h4 id="numeric">numeric</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>Inf
+NaN    #Undefined value - not a number. NaN is NA (but not the reverse)
+</code></pre>
+</div>
+
+<h4 id="integer">integer</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>5L
+</code></pre>
+</div>
+
+<h4 id="complex">complex</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<h4 id="logical">logical</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>T, F
+TRUE, FALSE
+</code></pre>
+</div>
+
+<h4 id="missing-values">missing values</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">NA</span>         <span class="c1">#NA has a type as well (NA character, etc)
+</span></code></pre>
+</div>
+
+<h4 id="date-times">Date-times</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">as.Date</span><span class="p">(</span><span class="s2">"1970-01-01"</span><span class="p">)</span>
+<span class="n">as.Date</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">"%d%b%Y"</span>
+<span class="n">Sys.time</span><span class="p">()</span>    <span class="c1">#uses the POSIXct class, ie, seconds since 1970-01-01
+</span><span class="n">as.POSIXlt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#list with sec, min, hour, mday, mon, year, wkday, yday, isdst
+</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"January 10, 2014"</span><span class="p">,</span> <span class="s2">"%B %d %Y"</span><span class="p">)</span>
+
+<span class="n">weekdays</span><span class="p">()</span>
+<span class="n">months</span><span class="p">()</span>
+<span class="n">julian</span><span class="p">()</span>        <span class="c1">#days since origin, 1970-01-01
+</span>
+<span class="n">date</span><span class="p">()</span>          <span class="c1">#returns current date/time as string
+</span><span class="n">Sys.Date</span><span class="p">()</span>      <span class="c1">#returns date (only) as Date class
+</span>
+<span class="n">library</span><span class="p">(</span><span class="n">lubridate</span><span class="p">)</span>
+<span class="n">ymd</span><span class="p">(</span><span class="s2">"20140108"</span><span class="p">)</span>
+<span class="n">mdy</span><span class="p">()</span>
+<span class="n">dmy</span><span class="p">()</span>
+<span class="n">ymd_hms</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="data-structures">Data Structures</h2>
+
+<h4 id="vectors">Vectors</h4>
+
+<ul>
+  <li>Only accepts elements of the same type</li>
+  <li>Mixing types will coherce to the lowest denominator of types</li>
+  <li>Can have named elements</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">vector</span><span class="p">()</span>                      <span class="c1">#empty vector
+</span><span class="n">vector</span><span class="p">(</span><span class="s2">"numeric"</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>  <span class="c1">#initializes to default value, 0
+</span>
+<span class="n">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">)</span>                  <span class="c1">#'combine' 
+</span>
+<span class="m">1</span><span class="o">:</span><span class="m">4</span>                           <span class="c1">#also 15:1 or pi:10
+</span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="n">by</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span>              <span class="c1">#generalizes the : operator
+</span><span class="n">seq</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="m">30</span><span class="p">)</span>
+<span class="n">seq_along</span><span class="p">(</span><span class="n">my_seq</span><span class="p">)</span>             <span class="c1">#also seq(along.with = my_seq), or 1:length(my_seq)
+</span><span class="n">rep</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+
+<span class="n">c</span><span class="p">(</span><span class="n">foo</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">bar</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>           <span class="c1">#named elements
+</span></code></pre>
+</div>
+
+<h4 id="matrices">Matrices</h4>
+<ul>
+  <li>All the data has to be same type (numeric, integer, logical, character).</li>
+  <li>Special type of vector, with a dimension attribute being a vector of length 2</li>
+  <li>a matrix is simply an atomic vector with a dimension attribute</li>
+  <li>Matrix multiplication with <code class="highlighter-rouge">a%*%b</code></li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="n">nrow</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span>
+<span class="n">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>  
+<span class="c1">#can also be created by adding a dimension attr to a vector
+</span><span class="n">dim</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>  <span class="p">;</span> <span class="n">dim</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>
+<span class="c1">#also by combining vectors
+</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">;</span> <span class="n">y</span><span class="o">=</span><span class="m">10</span><span class="o">:</span><span class="m">12</span> <span class="p">;</span> <span class="n">cbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="p">;</span> <span class="n">rbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="dataframe">data.frame</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">df</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">colA</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="n">colB</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span><span class="s1">'n'</span><span class="p">,</span><span class="s1">'y'</span><span class="p">))</span>    
+<span class="n">df</span><span class="o">$</span><span class="n">colA</span>
+<span class="n">df</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span>               <span class="c1">#first col
+</span><span class="n">def</span><span class="p">[</span><span class="m">1</span><span class="p">,]</span>              <span class="c1">#first row
+</span>
+<span class="c1">#Attributes
+</span><span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>           <span class="c1">#column names
+</span><span class="n">colnames</span><span class="p">()</span>
+<span class="n">row.names</span>           <span class="c1">#row names
+</span>
+<span class="c1">#New elements
+</span><span class="sb">`X$var4 &lt;- rnorm(5)`</span>    <span class="c1">#new column var4
+</span><span class="n">cbind</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">rnorm</span><span class="p">(</span><span class="m">5</span><span class="p">))</span>       <span class="c1">#like above
+</span></code></pre>
+</div>
+
+<h4 id="lists">lists</h4>
+<ul>
+  <li>stores other objects</li>
+  <li>can contain different types</li>
+  <li>indexed with double brackets [[]]
+```r
+list(1, “string”, 3.2)
+list(foo=1:4, bar=0.6)</li>
+</ul>
+
+<p>unlist                     #flatten
+```</p>
+
+<h4 id="factors">factors</h4>
+<p>Factors are variables in R which take on a limited number of different values; such variables are often refered to as categorical variables.
+There are two types: ordered and unordered.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">&lt;-</span> <span class="n">factor</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span><span class="s2">"n"</span><span class="p">,</span><span class="s2">"y"</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">factor</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span><span class="s2">"n"</span><span class="p">,</span><span class="s2">"y"</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span><span class="s2">"n"</span><span class="p">))</span> <span class="c1">#ordered
+</span></code></pre>
+</div>
+
+<h4 id="datatable">data.table</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
+<span class="n">tables</span><span class="p">()</span>      <span class="c1">#all the datatables in memory
+</span><span class="n">dt</span><span class="p">[</span><span class="n">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">]</span>     <span class="c1">#careful: when subsetting wtih single index, subsets rows! 
+</span><span class="n">df</span><span class="p">[,</span><span class="n">list</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">))]</span>   <span class="c1">#applies expressions to the table (x,y are colNames)
+</span><span class="n">dt</span><span class="p">[,</span><span class="n">w</span><span class="o">:=</span><span class="n">z</span><span class="o">^</span><span class="m">2</span><span class="p">]</span>   <span class="c1">#creates new column (without copying, as dataframe)
+</span><span class="n">dt</span><span class="p">[,</span><span class="n">a</span><span class="o">:=</span><span class="n">x</span><span class="o">&gt;</span><span class="m">0</span><span class="p">]</span>   <span class="c1">#new column of T/F-s
+</span></code></pre>
+</div>
+
+<h2 id="subsetting-and-sorting">Subsetting and sorting</h2>
+
+<h4 id="section">[ ]</h4>
+<ul>
+  <li>Single square bracket always returns <strong>objects of the same class</strong> as the original</li>
+  <li>To get multiple elements of a list, use [ ]</li>
+  <li>Drop argument in the [ ] operator reduces dimensions of the returned object by default: so subsetting a matrix and taking one element gives back a 1 dim vector.</li>
+  <li>Index vectors can be logical, integers (pos or neg) and character (if named elements exist)</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[</span><span class="s2">"bar"</span><span class="p">]</span>   
+<span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span>        <span class="c1">#numeric index
+</span><span class="n">x</span><span class="p">[</span><span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">)]</span>     <span class="c1">#List with elements 1 and 3 of the list
+</span><span class="n">x</span><span class="p">[</span><span class="n">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="m">-10</span><span class="p">)]</span> <span class="c1">#all elements except 2 and 10th. Also x[-c(2, 10)]
+</span></code></pre>
+</div>
+<p>Rows and columns
+<code class="highlighter-rouge">r
+x[,1]         #first col in a matrix/df
+x[,"colname"]
+x[1,]         #first row
+x[1:2,"var2"]
+</code>
+Logical index</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">&gt;</span><span class="m">2</span><span class="p">]</span>       
+<span class="n">x</span><span class="p">[</span><span class="o">!</span><span class="n">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+<span class="sb">`X[(X$var1 &lt;3 | X$var2&gt;10), ]`</span>
+<span class="sb">`X[which(X$var2&gt;8), ]`</span>         <span class="c1">#skips the NA by itself
+</span>
+</code></pre>
+</div>
+
+<h4 id="section-1">[[ ]]</h4>
+<ul>
+  <li>Double bracket operator used to extract a single element of a list and dataframe.</li>
+  <li>For example, with <code class="highlighter-rouge">x &lt;- list(foo=1:4, bar=0.6)</code>, x[[1]] gives an integer vector, while x[1] gives a list (which is the same class as the original object).</li>
+  <li>Accepts computed arguments</li>
+  <li>Recursive access: <code class="highlighter-rouge">x[[1]][[3]]</code> equivalent to  x[[c(1,3)]], gives third element of the first element. Nota that this is <strong>not</strong> the same as x[c(1,3)]!</li>
+</ul>
+
+<h4 id="section-2"><code class="highlighter-rouge">$</code></h4>
+<ul>
+  <li>Dollar sign used with lists or dataframes to get the element by name</li>
+  <li>Needs to be a literal symbol.</li>
+  <li>Accepts partial matching: ` x$a or x[[“a”, exact=FALSE]] ` retrieves <code class="highlighter-rouge">x$asdf</code>
+ in the console)
+<code class="highlighter-rouge">r
+x$bar equivalent to x[["bar"]]
+</code></li>
+</ul>
+
+<h4 id="existance-or-pertainance">existance or pertainance</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">v</span>
+<span class="n">any</span><span class="p">()</span>
+<span class="n">all</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h4 id="sort">sort</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">sort</span>             
+<span class="sb">`X[order(X$var1)]`</span>    <span class="c1">#order the df according to var1
+</span></code></pre>
+</div>
+
+<h4 id="set-operations">Set operations</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">intersect</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="summarizing--transforming-data">Summarizing &amp; transforming data</h2>
+
+<p>Summarize
+<code class="highlighter-rouge">r
+head(df,n)
+tail(df,n)
+str(df)
+summary(df)
+table(df$col, useNA="ifany")
+table(v1,v2)
+table(x)                     #gives the count of number of items
+quantile(df)
+sum(is.na(col))
+xtabs(Freq ~Gender + Admit, data=DF)  #pivot table: values=Freq, rows=Gender, cols=Adm 
+ftable(xt)                    #hierarchical summary of xtabs
+</code></p>
+
+<p>Create variables
+<code class="highlighter-rouge">r
+col %in% c('A','B')               #subset indication
+ifelse(col&lt;0,TRUE,FALSE)          #binary variables
+cut(col, breaks=quantiles(col))   #factor variable breaking up the variable in groups
+factor(col)
+as.numeric(col)
+mutate(df, newcol=...)            #adds new columns???
+</code></p>
+
+<p>Reshape data
+<code class="highlighter-rouge">r
+library(reshape)
+melt                              #function to reshape (one row for each measure vars)
+dcast(df, cyl~variable, mean)
+</code></p>
+
+<p>Merge data
+<code class="highlighter-rouge">r
+merge(x,y, by.x, by.y, all)       #by default all the columns overlapping; else, use by.x etc)
+</code></p>
+
+<h2 id="plyrdplyr-packages">plyr/dplyr packages</h2>
+
+<h4 id="plyr">plyr</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">arrange</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">var1</span><span class="p">)</span>                   <span class="c1">#order
+</span><span class="n">arrange</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">desc</span><span class="p">(</span><span class="n">var1</span><span class="p">))</span>             <span class="c1">#order desc
+</span><span class="n">join</span>                              <span class="c1">#plyr package; only joins by common names              
+</span><span class="n">join_all</span><span class="p">(</span><span class="n">list</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="n">df2</span><span class="p">,</span><span class="n">df3</span><span class="p">))</span>       <span class="c1">#
+</span></code></pre>
+</div>
+
+<h4 id="dplyr">dplyr</h4>
+<p>Format: 
+ - first arg: df
+ - subsequent args ; note that column names can be referred without the $.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col1</span><span class="o">:</span><span class="n">col3</span>             <span class="c1">#selects columns
+</span><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">col1</span><span class="o">:</span><span class="n">col3</span><span class="p">))</span>         <span class="c1">#excludes columns
+</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col2</span><span class="o">&gt;</span><span class="m">10</span> <span class="o">&amp;</span> <span class="n">col1</span><span class="o">&lt;</span><span class="m">100</span><span class="p">)</span>   <span class="c1">#selectes rows
+</span><span class="n">arrange</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span>                <span class="c1">#sort
+</span><span class="n">arrange</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="n">date</span><span class="p">))</span>          <span class="c1">#sort descending
+</span><span class="n">rename</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">newname</span><span class="o">=</span><span class="n">oldname</span><span class="p">)</span>
+<span class="n">mutate</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="n">var</span><span class="o">-</span><span class="n">mean</span><span class="p">(</span><span class="n">var</span><span class="p">))</span>  <span class="c1">#create new variable
+</span><span class="n">summarize</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">var</span><span class="p">),</span> <span class="n">colA</span><span class="o">=</span><span class="n">mean</span><span class="p">(</span><span class="n">colA</span><span class="p">))</span>
+<span class="o">%&gt;%</span>                              <span class="c1">#pipeline operator
+</span>
+</code></pre>
+</div>
+
+<h2 id="string-manipulation">String manipulation</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">tolower</span><span class="p">()</span> <span class="p">,</span> <span class="n">toupper</span><span class="p">()</span>
+<span class="n">strsplit</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="s2">"\\."</span><span class="p">)</span>      <span class="c1">#. is a reserverd character.
+</span><span class="n">sub</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span><span class="s2">""</span><span class="p">,</span><span class="n">names</span><span class="p">)</span>           <span class="c1">#replace first
+</span><span class="n">gsub</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span><span class="s2">""</span><span class="p">,</span><span class="n">names</span><span class="p">)</span>          <span class="c1">#replace allç
+</span><span class="n">grep</span><span class="p">(</span><span class="s2">"text"</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>          <span class="c1">#returns element numbers where "test"apperas
+</span><span class="n">grep</span><span class="p">(</span><span class="s2">"text"</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">T</span><span class="p">)</span> <span class="c1">#returns elements where "test"apperas
+</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"text"</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>         <span class="c1">#boolean vector where "text" appers
+</span>
+<span class="n">libarary</span><span class="p">(</span><span class="n">stringr</span><span class="p">)</span>
+<span class="n">substr</span><span class="p">(</span><span class="s2">"str"</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span><span class="m">2</span><span class="p">)</span>          <span class="c1">#substring
+</span><span class="n">paste</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span><span class="s2">"b"</span><span class="p">)</span>              <span class="c1">#paste together, default separation is space
+</span><span class="n">str_trim</span><span class="p">(</span><span class="s2">"text  "</span><span class="p">)</span>          <span class="c1">#remove end spcaes 
+</span></code></pre>
+</div>
+
+<p>Regular expressions
+```r
+^str              #beggining of line
+str$              #end of line
+[Bb][Uu][Ss][Hh]  #matches bush, Bush, busH etc  <br />
+[0-9][a-zA-Z]     #range of characters
+[^str]            #matches any character NOT in the indicated class
+.                 #any single character
+str|str           #combines alternatives with OR
+()                #group
+()?               #the expression is optional
++                 #repeat any muber of times but at least one
+*                 #repeat any number of times (including 0). It’s greedy (max chars it can)
+*?                #not greedy: min number of chars possible that match
+{}                #qualifiers; specify min and max number of times the expression matches
+\1 \2             #to refer to the matched text before</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+
+
+
+## Reading /Writing data  
+
+```r
+read.table()           #parameters: file, header, sep, row.names, nrows
+read.csv()
+read.csv2()
+readLines              #lines of a text file
+source                 #read R code files
+dget                   #read R code files
+unserialize            #read R objects in binary form
+
+write.table(df, file="outputfile.csv", sep=',')
+</code></pre>
+</div>
+
+<h4 id="xls-files">xls files:</h4>
+<p>xlsx package, but alto xlsx2, XLConnect
+<code class="highlighter-rouge">r
+library ( xlsx ) 
+read.xlsx ("datafile.xlsx", sheetIndex=1,header=TRUE)
+write.xlsx()
+#xls files:
+library ( gdata )
+data &lt;- read.xls ( "datafile.xls" )
+</code></p>
+
+<h4 id="xml">XML</h4>
+<p>Componentes: Markup and Content.<br />
+Examples:<br />
+ - elements <code class="highlighter-rouge">&lt;Greeting&gt; Hello! &lt;/Greeting&gt;</code>
+ - empty tags <code class="highlighter-rouge">&lt;line-break/&gt;</code>
+ - attributes <code class="highlighter-rouge">&lt;step number=3&gt; Connect A &lt;/step&gt;</code>
+<code class="highlighter-rouge">r
+library(XML)
+doc &lt;- xmlTreeParse(fileUrl, useInternal=T)
+rootNode &lt;- xmlRoot(doc)
+xmlName(rootNode)
+rootNode[[1]] etc
+</code></p>
+
+<h4 id="json">Json</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">jsonlite</span><span class="p">)</span>
+<span class="n">jsonData</span> <span class="o">&lt;-</span> <span class="n">fromJSON</span><span class="p">(</span><span class="s2">"..."</span><span class="p">)</span>
+<span class="n">names</span><span class="p">(</span><span class="n">jsonData</span><span class="p">)</span> 
+<span class="n">names</span><span class="p">(</span><span class="n">jsonData</span><span class="o">$</span><span class="n">field</span><span class="p">)</span>
+<span class="n">tojson</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pretty</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h5 id="mysql">mySQL</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"RMySQL"</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">&lt;-</span> <span class="n">dbConnect</span><span class="p">(</span><span class="n">MySQL</span><span class="p">(),</span> <span class="n">user</span><span class="o">=</span><span class="s2">"..."</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"..."</span><span class="p">)</span>
+<span class="n">dbGetQuery</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s2">"show databases"")   #shows all databases in the server
+dbDisconnect(conn)
+
+conn2 &lt;- dbConnect(MySQL(), user="</span><span class="k">...</span><span class="s2">", db="</span><span class="k">...</span><span class="s2">", host="</span><span class="k">...</span><span class="s2">")
+dbListTables(conn2)
+dbListFields(conn2, "</span><span class="n">tablename</span><span class="s2">")
+dbReadTable(conn2, "</span><span class="n">tablename</span><span class="s2">")
+dbGetQuery(conn2, "</span><span class="n">sql_sentence</span><span class="s2">")
+q &lt;- dbSendQuery(conn2, "</span><span class="n">sql_sentence</span><span class="err">"</span><span class="p">)</span>
+  <span class="n">fetch</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="m">10</span><span class="p">)</span> <span class="c1">#10 rows of table
+</span>  <span class="n">dbClearResult</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>  <span class="c1">#clear query from server
+</span></code></pre>
+</div>
+
+<h4 id="hdf5">HDF5</h4>
+<p>Contains groups (with zero or more sets and their metadata):
+ - A group has a header, with group name and list of attributes
+ - Also a symbol table, with list of objects in the group.
+Contains datasets (data and metadata)
+ - Header (name, dtype, dataspace, storage layout)
+ - Array with the data
+<code class="highlighter-rouge">r
+source("http://bioconductor.org/biocLite.R")
+biocLite("rhdf5")
+library(rhdf5)
+h5createFile("a.h5")
+h5createGroup("a.h5", "foo")   #create group
+h5ls("a.h5")                   #see the groups 
+h5write(df, "a.h5", "foo")     #foo is a group; or can be "df" to put at upper level
+h5read("a.h5", "foo/A", index=list(1:3,1))  #read elements 1:3 of columns 1 
+</code></p>
+
+<h4 id="web">Web</h4>
+<p>Webscraping
+```r
+conn = url(“url”)
+htmlCode = readLines(conn)
+close (conn)</p>
+
+<p>library(XML)
+html &lt;- htmlTreeParse(url, useInternalNodes=T)
+xpathSApply(html, “//title”, xmlValue)
+```</p>
+
+<p>Alternative way to parese the data is httr, which allows authentication.
+<code class="highlighter-rouge">r
+library(httr)
+html2 = GET(url)
+content2 = content(html2, as="text")
+parsedHtml = htmlParse(content2, asText=T)
+xpathSApply(...)
+</code></p>
+
+<p>Using handles to not need to authenticate time and again
+```r
+g = handle(“http://…”)
+pg1 = GET(handle=g, path=”/”)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+#### API
+```r
+library(httr)
+myapp = oauth_app("twitter", key="..", secret="..")
+sig = sign_oauth1.0(myapp, token="..", token_secret="..")
+homeTL = GET("https://...json", sig)
+j = content(homeTL)
+j2 = jsonlite::fromJSON(toJSON(j)
+</code></pre>
+</div>
+
+<h4 id="etc">Etc</h4>
+<p>Rough memory requirement calculation: 8bytes/numeric. But R need about 2 times this amount</p>
+
+<p>Other textual formats that preserve the metadata:
+ - <code class="highlighter-rouge">dput / dget</code>  : writes R code which can reconstruct the R object
+ - <code class="highlighter-rouge">dump</code>    : as dput can be used on multiple objects</p>
+
+<p>Interfaces to files/sites
+ - <code class="highlighter-rouge">file() ; close()</code>  : opens a conection to a file
+ - <code class="highlighter-rouge">url()</code>             : connection to a webpage</p>
+
+<p>Get data from the internet: <br />
+<code class="highlighter-rouge">download.file()</code>      #use flag method=”curl” if https</p>
+
+<h2 id="control-structures">Control structures</h2>
+
+<h4 id="if-statemen">IF statemen</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="m">1</span><span class="p">){</span>
+    <span class="k">...</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="p">{</span>
+    <span class="k">...</span>
+<span class="p">}</span>
+<span class="c1">#shortcut : ifelse(i==1, ..., ...)
+#also : y &lt;- if(...){1}else{0}
+</span></code></pre>
+</div>
+
+<h4 id="for-loops">FOR loops</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">){</span><span class="k">...</span><span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">seq_along</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]}</span>
+</code></pre>
+</div>
+
+<h4 id="while-loops">WHILE loops</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">while</span><span class="p">(</span><span class="n">z</span><span class="o">&gt;</span><span class="m">3</span> <span class="o">&amp;&amp;</span> <span class="n">z</span><span class="o">&lt;</span><span class="m">10</span><span class="p">){</span><span class="k">...</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="repeat-loops">REPEAT loops</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">repeat</span> <span class="p">{</span><span class="k">...</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="control-structures-1">Control structures</h4>
+<ul>
+  <li>To exit loops:  <code class="highlighter-rouge">return</code>?? (stops the function)</li>
+  <li>To continue to next iteration: <code class="highlighter-rouge">next</code></li>
+</ul>
+
+<h4 id="logical-operators">logical operators</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="o">!</span> <span class="n">x</span>
+<span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span>
+<span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">y</span>        <span class="c1">#only evaluates the first member of a vector, &amp; does elementwise
+</span><span class="n">x</span> <span class="o">|</span> <span class="n">y</span>
+<span class="n">x</span> <span class="o">||</span> <span class="n">y</span>        <span class="c1">#only evaluates the first member of a vector, | does elementwise
+</span><span class="n">xor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">isTRUE</span><span class="p">()</span>
+<span class="n">which</span><span class="p">()</span>       <span class="c1">#returns indices of the TRUE *indices* of a vector
+</span><span class="n">any</span><span class="p">()</span>
+<span class="n">all</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="loop-functions-apply-functions">Loop functions (‘apply’ functions)</h2>
+
+<p>Like lookuping through elements, but more compact. These functions make use of anonomous functions. Split-apply-combine strategy</p>
+
+<h4 id="lapply--sapply--vapply">lapply / sapply / vapply</h4>
+<ul>
+  <li>lapply: loops over list and applyes func to each of them, returning list</li>
+  <li>sapply: (variant of lapply) tries to put elements as vector or matrix when possible</li>
+  <li>similar to sapply, but you can specify the output format requested; else it will error out</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">lapply</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="k">...</span><span class="p">)</span>  <span class="c1">#applies fun to each element in list; returns *list^
+</span>                        <span class="c1">#the ... arguments go to fun
+</span><span class="n">lapply</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">range</span><span class="p">)</span>
+<span class="n">lapply</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">unique</span><span class="p">)</span>
+<span class="n">sapply</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">class</span><span class="p">)</span>       <span class="c1">#vector
+</span><span class="n">sapply</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">sum</span><span class="p">)</span>         <span class="c1">#vector
+</span>
+<span class="c1">#With Annonimous function
+</span><span class="n">lapply</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span>  <span class="c1">#takes the second col of each element
+</span>
+<span class="c1">#vapply
+</span><span class="n">vapply</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">class</span><span class="p">,</span> <span class="n">character</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<h4 id="apply">apply</h4>
+<p>Works over the margins of the array (rows or columns of matrix for ex)
+<code class="highlighter-rouge">r
+apply(mymatrix, 2, sum)   #sumes the columns; margin=2 means keep the second dimension (cols) and collaps the other dim
+</code>
+Note that specifically for row/col <em>sums</em> and <em>means</em>, there are specialized and optimized functions:
+<code class="highlighter-rouge">r
+rowSums = apply(x, 1, sum)     #colSumns
+rowMean = apply(x, 1, mean)    #colMeans
+</code></p>
+
+<h4 id="tapply">tapply</h4>
+<p>Apply function over subsets of a vector
+<code class="highlighter-rouge">r
+tapply(x, index, fun)    #index should be a factor that groups the observations of x
+</code></p>
+
+<h4 id="mapply">mapply</h4>
+<p>Can take multiple list arguments; applies in parallel to various objects; there should be as many lists as arguments nneded by mapply. A way to vectorize a function.<br />
+<code class="highlighter-rouge">r
+mapply(rep,1:4, 3:7)     #repeat number 1 three-times, number 2 four-times etc
+</code></p>
+
+<h4 id="split">split</h4>
+<p>Similar to tapply but without the summary funcion.</p>
+
+<h4 id="replicate">replicate</h4>
+<p>replicate(100, rpois(5, 10))   #returns a matrix</p>
+
+<h2 id="creating-functions">Creating functions</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">myfunc</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">){</span>
+    <span class="k">...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>R functions return the last expression in the function</li>
+  <li>Default values to arguments like in python (n=10, m=NULL)</li>
+  <li>Partial matching of argument names allowed</li>
+  <li>R uses lazy evaluation: ie, <code class="highlighter-rouge">f(a,b){}</code> can be called with <code class="highlighter-rouge">f(2)</code> if b not used in f.</li>
+  <li>Variable number of arguments with … (ie, **kwargs):  <code class="highlighter-rouge">f(a,b,...)</code> . Any argument after … must be named explicitly (an din full, ie, no partial matching)</li>
+  <li>The function can end with invisible(x) so not to autoprint object to console</li>
+</ul>
+
+<p>Scoping rules:</p>
+
+<ul>
+  <li>First R looks for the symbol in the ‘global’ environment (ie, our defined symbols)</li>
+  <li>If not found, R will look in the namespaces of each of the packages on the searchlist. The last included library goes in the top of the list.</li>
+  <li>There are separate namespaces for functions and non-functions</li>
+  <li>R uses ‘Lexical scoping’, ie, the values of free-variables (ie, not defined within a function) are searched for in the environment in which the function was defined, up to the top. Other languages use ‘dynamic scoping’ (ie, values are assigned looking at the environment where the function was <em>called</em> from).</li>
+  <li>An environment is a collection of symbolvalue pairs. A function plus an environment is a function closure.</li>
+</ul>
+
+<h2 id="debugging--profiling">Debugging &amp; Profiling</h2>
+
+<h4 id="debug">Debug</h4>
+<p>Indication levels:
+ - message
+ - warning : execution continues; warning appears at the end of execution
+ - error : execution stopped
+ - condtion : meaning exception, can be user defined</p>
+
+<p>Debugging tools:
+ - traceback() : prints function call stack; does nothing if there is no error
+ - debug : flags a function and allows execution one line at a time; <code class="highlighter-rouge">n</code> next line
+ - browser : supends execution of a funct at that particular point
+ - trace : insert debugging code at specific places
+ - recover : change default behaviour (during R session) of getting the console back, and instead will freez the execution of the failed function and look around with the browser</p>
+
+<h4 id="profiling">Profiling</h4>
+
+<p>Timing
+ - user time: cpu
+ - elapsed time: experienced by we (the users)</p>
+
+<p>Rprof()
+ - by.total : note that top level function takes always 100%.
+ - by.self : most interesting format; substracts all other functions</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">system.time</span><span class="p">()</span>    <span class="c1">#evaluates an expression
+</span><span class="n">Rprof</span><span class="p">()</span>
+<span class="n">summaryRprof</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="random-number-generation">Random number generation</h2>
+
+<p>Functions
+```r
+rnorm   #generate random normal variates
+rpois   #generate random Poisson variates
+rbinom  #binomial, discrete values
+…</p>
+
+<p>dnorm   #evalueate the normal probability density at a point
+pnorm   #evaluate the cumulative distr func fo a Normal distr
+qnorml  #evaluate the quantile function
+…
+```</p>
+
+<p>Sample from aribrary vectors
+<code class="highlighter-rouge">r
+sample(1:10, 4)   #take 4 randomly; default replace=FALSE
+sample(1:10)      #permutation; default replace=FALSE
+</code></p>
+
+<p>Seed<br />
+<code class="highlighter-rouge">r 
+set.seed(1)
+</code></p>
+
+<h2 id="plots">Plots</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="k">...</span><span class="p">)</span>    <span class="c1">#arguments:  xlab, ylab, main (title), col (color), xlim
+</span><span class="n">plot</span><span class="p">(</span><span class="n">dist</span> <span class="o">~</span> <span class="n">speed</span><span class="p">,</span> <span class="n">cars</span><span class="p">)</span>    <span class="c1">#'formula' interface
+</span>
+<span class="n">boxplot</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">mpg</span> <span class="o">~</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">)</span>
+
+<span class="c1">#Paramenters:
+</span><span class="n">colors</span><span class="o">:</span> <span class="n">red</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> 
+</code></pre>
+</div>
+
+<h2 id="snippets">Snippets</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">&lt;-</span> <span class="n">matrix</span> <span class="p">(</span><span class="n">rnorm</span><span class="p">(</span><span class="m">200</span><span class="p">),</span> <span class="m">20</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>Base contents are from the Coursera course on R programming (Johns Hopkins)   https://github.com/rdpeng/courses/tree/master/02_RProgramming , and also from the genreal ‘Data Science’ specialization (Johns Hopkins)</li>
+  <li><a href="https://www.youtube.com/watch?v=HKjSKtVV6GU">Introduction to R Programming Part 1</a>   (youtube video)</li>
+  <li>https://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf</li>
+  <li>https://www.rstudio.com/resources/cheatsheets/</li>
+</ul>
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="http://twitter.com/asrbrr">
+        <img class="avatar" src="/assets/images/avatar.png">
+        <div>
+            <span class="dark"></span>
+            <span>Notes and blog entries around Data Science and related topics</span>
+        </div>
+    </a>
+
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https://asrbrr.github.io/R_cheatsheet/ - R language chatsheet  by @asrbrr"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+    </section>
+</footer>
+
+<!-- Disqus comments -->
+
+
+<!-- Archive post list -->
+
+
+
+
+
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-XXXXXXXX-X', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
+
+
+
